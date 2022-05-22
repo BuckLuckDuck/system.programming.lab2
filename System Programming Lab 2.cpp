@@ -18,11 +18,13 @@ int main()
         std::cout << numbers[i] << " ";
     }
 
+	cout << endl;
+
 	_asm 
 	{
 		push size
 		push numbers
-		call BubbleSort
+		call sortBubble
 		mov numbers, eax
 		add esp, 8
 	}
