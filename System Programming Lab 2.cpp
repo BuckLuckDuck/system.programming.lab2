@@ -5,15 +5,15 @@ static int* sortBubble(int* arr, int len);
 
 int main()
 {
-    int size = 10;
-    int* numbers = new int[size];
+    int siz = 10;
+    int* numbers = new int[siz];
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < siz; i++)
     {
         numbers[i] = rand() % 31;
     }
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < siz; i++)
     {
         std::cout << numbers[i] << " ";
     }
@@ -22,14 +22,14 @@ int main()
 
 	_asm 
 	{
-		push size
+		push siz
 		push numbers
 		call sortBubble
 		mov numbers, eax
 		add esp, 8
 	}
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < siz; i++)
     {
         std::cout << numbers[i] << " ";
     }
