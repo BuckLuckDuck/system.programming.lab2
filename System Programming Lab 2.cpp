@@ -1,40 +1,61 @@
 ﻿#include <iostream>
 using namespace std;
 
-int sortBubble(int *arr, int len)
-{
-    _asm
-    {
-        mov ebx, arr
-        mov ecx, len
-        for_i: dec ecx
-        xor edx, edx
-        for_j: cmp ebx, ecx
-        jae exit_for_j
-        jbe no_swap
-        mov eax, 
-    }
-    return;
-}
+static int* sortBubble(int* arr, int len);
 
 int main()
 {
-    const int size = 10;
-    int numbers[size];// { 0 };
+    int size = 10;
+    int* numbers = new int[size];
+
     for (int i = 0; i < size; i++)
     {
-        numbers[i] = 9 - i;
+        numbers[i] = rand() % 31;
     }
 
-    for (size_t i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         std::cout << numbers[i] << " ";
     }
 
-    cout << sortBubble(numbers, 7);
+	_asm 
+	{
+		push size
+		push numbers
+		call BubbleSort
+		mov numbers, eax
+		add esp, 8
+	}
 
-    for (size_t i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         std::cout << numbers[i] << " ";
     }
+}
+
+static int* sortBubble(int* arr, int len)
+{
+	_asm
+	{
+		mov ecx, len
+		dec ecx
+		mov eax, arr
+	J3 : mov edx, 0
+	J2 : mov ebx, edx
+		inc ebx
+		mov ebx, [eax + 4 * ebx]
+		cmp[eax + 4 * edx], ebx
+		jle J1
+		mov esi, edx
+		inc esi
+		mov edi, [eax + 4 * edx]
+		mov[eax + 4 * esi], edi
+		mov[eax + 4 * edx], ebx
+	J1 : inc edx
+		cmp edx, ecx
+		jl J2
+		dec ecx
+		cmp ecx, 0
+		jg J3
+	}
 }
